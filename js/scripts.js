@@ -13,10 +13,16 @@ function log (message) {
 
 function init () {
   playground = new Playground();
+  
   snake = new Snake(playground.getID(), playground.getClusterSize(), playground.getCleanCenterCoords());
+
   engine = new Engine(snake, playground);
   
   engine.start();
+}
+
+function newTestFunction () {
+  return
 }
 
 init();
