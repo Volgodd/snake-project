@@ -5,24 +5,24 @@ let snake = null;
 let engine = null;
 let playground = null;
 
-function log (message) {
+function log(message) {
   if (LOGGING) {
     // console.log(message)
   }
 }
 
-function init () {
+function init() {
   playground = new Playground();
-  
-  snake = new Snake(playground.getID(), playground.getClusterSize(), playground.getCleanCenterCoords());
+
+  snake = new Snake(
+    playground.getID(),
+    playground.getClusterSize(),
+    playground.getCleanCenterCoords()
+  );
 
   engine = new Engine(snake, playground);
-  
-  engine.start();
-}
 
-function newTestFunction () {
-  return
+  engine.start();
 }
 
 init();
