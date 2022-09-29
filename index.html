@@ -19,10 +19,17 @@
   </head>
   <body>
     <div class="game-container">
+      
+      <div class="game-container__win">
+        <button class="game-container__button">
+         New game
+        </button>
+        <h1 class="game-container__win-tag">Congratulations! You're win!</h1>
+        <h2 class="game-container__last-score--win">Your score: <span></span></h2>
+      </div>
       <div class="game-container__scoreboard">
         <h2>Your score: <span> 0</span></h2>
         <h2 id="high-score">highscore: <span></span></h2>
-
       </div>
       <div class="game-container__game-overlays">
         <div class="game-container__game-over">
@@ -32,13 +39,15 @@
           <h1 class="game-container__game-over-tag">Game over</h1>
           <h2 class="game-container__last-score">Your score: <span></span></h2>
         </div>
-        <div class="game-container__win">
-          <button class="game-container__button">
-           New game
-          </button>
-          <h1 class="game-container__win-tag">Congratulations! You're win!</h1>
-          <h2 class="game-container__last-score--win">Your score: <span></span></h2>
-        </div>
+      
+      </div>
+
+      <div class="game-container__footer">
+        <span>Sound</span>
+        <label class="game-container__switch">
+          <input type="checkbox">
+          <span class="game-container__slider"></span>
+        </label>
       </div>
     </div>
   </body>

@@ -19,7 +19,7 @@ class Engine {
 
     this.playground = playground;
 
-    this.setUpButtons();
+    this._setUpButtons();
   }
 
   _safeguardOppositeDirections(newPotentialDirection) {
@@ -104,14 +104,14 @@ class Engine {
       this.playground.outOfBoundsIsTrue(currentSnakeCoords);
     
     if (snakeIsOutOfBounds) {
-      this.stop();
+      this._stop();
       this.playground.editScore(true, false);
     }
 
     const snakeSelfCollides = this.snake.selfCollides()
 
     if (snakeSelfCollides) {
-      this.stop();
+      this._stop();
       this.playground.editScore(true, false);
     }
 
@@ -123,16 +123,16 @@ class Engine {
     }
 
     if (snakeCollidesWithFood && this.snake.snakeLengthForBoost(true)) {
-      this.boostSnakeSpeed();
+      this._boostSnakeSpeed();
     }
 
     if (this.playground.PLAYGROUND_FREE_CLUSTERS.length === 0) {
-      this.win();
+      this._win();
       this.playground.editScore(false, false, true);
     }
   } 
 
-  boostSnakeSpeed () {
+  _boostSnakeSpeed () {
     this.TICK_SPEED = this.TICK_SPEED - 50;
     clearInterval(this.MOVE_TIMER);
     this.MOVE_TIMER = setInterval( () => this._moveSnakeWrapper(),
@@ -152,7 +152,7 @@ class Engine {
     );
   }
 
-  stop() {
+  _stop() {
     document.removeEventListener("keydown", (e) => this._handleKeyDown(e));
     clearInterval(this.MOVE_TIMER);
     this.MOVE_TIMER = null;
@@ -161,7 +161,7 @@ class Engine {
     this.TICK_SPEED = this.START_TICK_SPEED;
   }
 
-  win () {
+  _win () {
     document.removeEventListener("keydown", (e) => this._handleKeyDown(e));
     clearInterval(this.MOVE_TIMER);
     this.MOVE_TIMER = null;
@@ -170,16 +170,16 @@ class Engine {
     this.TICK_SPEED = this.START_TICK_SPEED;
   }
 
-  reset () {
+  _reset () {
     this.playground.editScore(false, true);
     this.CURRENT_DIRECTION = this.DIRECTIONS.RIGHT;
   }
 
-  setUpButtons() {
+  _setUpButtons() {
     document.querySelectorAll('.game-container__button').forEach(item => {item.addEventListener('click', (e) => {
       document.querySelector('.game-container__game-overlays').classList.remove('active');
 
-      this.reset();
+      this._reset();
       this.start()
      })
     })
