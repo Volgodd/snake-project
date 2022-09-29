@@ -16,7 +16,6 @@ class Snake {
 
   _generatePositionCSS({ x, y }) {
     return `--x-coord: ${x}px; --y-coord: ${y}px;`;
-    
   }
 
   _createSnakeSegmentAt({ x, y }) {
@@ -50,7 +49,7 @@ class Snake {
     for (let i = 0; i < snakeSegmentCollection.length; i++) {
       snakeSegmentCollection[i].remove();
     }
-
+    
     this.SNAKE_SEGMENTS_COORDS = [];
   }
 

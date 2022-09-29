@@ -110,7 +110,7 @@ class Playground {
     console.log(this.PLAYFIELD_COORDS);
   }
 
-  generateAllPlayfieldClusters() {
+  _generateAllPlayfieldClusters() {
     this.ALL_PLAYFIELD_CLUSTERS = [];
     for (let y = 0; y < this.HEIGHT_CLUSTERS * this.CLUSTER_SIZE; y += 20) {
       // console.log('Y: ', y)
@@ -122,7 +122,7 @@ class Playground {
     // console.log(this.ALL_PLAYFIELD_CLUSTERS);
   }
 
-  compareCoords(snakeX, snakeY, playfieldX, playfieldY) {
+  _compareCoords(snakeX, snakeY, playfieldX, playfieldY) {
     if (snakeX !== playfieldX || snakeY !== playfieldY) {
       return (this.COMPARE_COORDS_SUCCESS = true);
     } 
@@ -135,7 +135,7 @@ class Playground {
     // }
   }
 
-  findClusters(clusters, index) {
+  _findClusters(clusters, index) {
     if (
       clusters.includes(
         clusters.find(
@@ -151,7 +151,7 @@ class Playground {
     // allClusters.includes(allClusters.find(el => el.x === allClusters[index].x && el.y === allClusters[index].y ))
   }
 
-  arrayContainsObject (allCoords, obj) {
+_arrayContainsObject (allCoords, obj) {
     if (allCoords.some(e => e.x === obj.x && e.y === obj.y)) {
       return true 
 
@@ -164,8 +164,8 @@ class Playground {
     }
   }
 
-  generateFreeClusters() {
-    this.generateAllPlayfieldClusters();
+  _generateFreeClusters() {
+    this._generateAllPlayfieldClusters();
     this.PLAYGROUND_FREE_CLUSTERS = [];
 
     let snakeCoords = snake.SNAKE_SEGMENTS_COORDS;
@@ -174,7 +174,7 @@ class Playground {
     for (let i = 0; i < snakeCoords.length; i++) {
       let snakeCoordsObject = {x: snakeCoords[i].x, y: snakeCoords[i].y};
       // console.log(snakeCoordsObject);
-      if (this.arrayContainsObject(allClusters, snakeCoordsObject)) {
+      if (this._arrayContainsObject(allClusters, snakeCoordsObject)) {
         let index = allClusters.findIndex(i => {
           return i.x === snakeCoordsObject.x && i.y === snakeCoordsObject.y});
         // console.log(index)
@@ -190,8 +190,8 @@ class Playground {
   
   }
 
-  freeClustersScopeVar2() {
-    this.generateAllPlayfieldClusters();
+  _freeClustersScopeVar2() {
+    this._generateAllPlayfieldClusters();
     this.PLAYFIELD_COORDS = [];
 
     let snakeCoords = snake.SNAKE_SEGMENTS_COORDS;
@@ -202,11 +202,11 @@ class Playground {
       let snakeCoordsObject = {x: snakeCoords[i].x, y: snakeCoords[i].y};
       let playgroundCoordsObject = {x: allClusters[index].x, y: allClusters[index].y};
 
-      this.arrayContainsObject(allClusters, snakeCoordsObject);
-      this.arrayContainsObject(this.PLAYFIELD_COORDS, playgroundCoordsObject);
+      this._arrayContainsObject(allClusters, snakeCoordsObject);
+      this._arrayContainsObject(this.PLAYFIELD_COORDS, playgroundCoordsObject);
 
-      // this.arrayContainsObject(this.PLAYFIELD_COORDS, playgroundCoordsObject);
-      // this.compareCoords(snakeCoords[i].x, snakeCoords[i].y, allClusters[index].x, allClusters[index].y)
+      // this._arrayContainsObject(this.PLAYFIELD_COORDS, playgroundCoordsObject);
+      // this._compareCoords(snakeCoords[i].x, snakeCoords[i].y, allClusters[index].x, allClusters[index].y)
 
       console.log(playgroundCoordsObject);
       console.log(snakeCoordsObject);
@@ -220,7 +220,7 @@ class Playground {
             this.PLAYFIELD_COORDS.push(playgroundCoordsObject);
 
             console.log('push made')
-            // this.arrayContainsObject(this.PLAYFIELD_COORDS, playgroundCoordsObject);
+            // this._arrayContainsObject(this.PLAYFIELD_COORDS, playgroundCoordsObject);
 
             // console.log(this.CAN_ADD_COORDS); 
             // if (this.CAN_ADD_COORDS) {
@@ -235,7 +235,7 @@ class Playground {
         
       }
 
-          // this.findClusters(allClusters, index, allClusters[index].x, allClusters[index].y);
+          // this._findClusters(allClusters, index, allClusters[index].x, allClusters[index].y);
 
           // if (this.CAN_ADD_COORDS) {
           //   // t
@@ -317,7 +317,7 @@ class Playground {
       this.DRAWN_FOOD_Y = 0;
     };
 
-    this.generateFreeClusters();
+    this._generateFreeClusters();
 
     if (this.PLAYGROUND_FREE_CLUSTERS.length !== 0) {
       this._drawRandomFoodImageAtCoords();
@@ -330,7 +330,7 @@ class Playground {
       currentSnakeY === this.DRAWN_FOOD_Y
     ) {
 
-      this.generateFreeClusters();
+      this._generateFreeClusters();
       this.regenerateFoodImage();
 
       return true;
