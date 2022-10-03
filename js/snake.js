@@ -124,6 +124,7 @@ class Snake {
     for (let index = this.SNAKE_SEGMENTS_COORDS.length - 1; index >= 0; index--) {
       this._moveBySnakeSegmentIndex(index, newSnakeX, newSnakeY);
     }
+    
   }
 
   turnHead (oppositeDir, currentDirection, DIRECTIONS) {
