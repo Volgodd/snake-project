@@ -8,29 +8,31 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400&display=swap"
-      rel="stylesheet">
+      rel="stylesheet"
+    />
     <title>Max`s snake</title>
     <link rel="stylesheet" href="css/styles.css" />
     <script src="js/snake.js" defer></script>
     <script src="js/engine.js" defer></script>
     <script src="js/playground.js" defer></script>
+    <script src="js/audio.js" defer></script>
     <script src="js/scripts.js" defer></script>
+
     <!-- <script src="js/tst.js" defer></script> -->
   </head>
   <body>
     <div class="game-container">
-      
-      <div class="game-container__win">
-        <button class="game-container__button">
-         New game
-        </button>
-        <h1 class="game-container__win-tag">Congratulations! You're win!</h1>
-        <h2 class="game-container__last-score--win">Your score: <span></span></h2>
-      </div>
       <div class="game-container__scoreboard">
         <h2>Your score: <span> 0</span></h2>
         <h2 id="high-score">highscore: <span></span></h2>
       </div>
+
+      <div class="game-container__new-game-overlays">
+        <div id="new-game-button">
+          <button class="game-container__button">Start game</button>
+        </div>
+      </div>
+
       <div class="game-container__game-overlays">
         <div class="game-container__game-over">
           <button class="game-container__button">
@@ -38,14 +40,22 @@
           </button>
           <h1 class="game-container__game-over-tag">Game over</h1>
           <h2 class="game-container__last-score">Your score: <span></span></h2>
+          <div class="game-container__win">
+            <button class="game-container__button">New game</button>
+            <h1 class="game-container__win-tag">
+              Congratulations! You're win!
+            </h1>
+            <h2 class="game-container__last-score--win">
+              Your score: <span></span>
+            </h2>
+          </div>
         </div>
-      
       </div>
 
       <div class="game-container__footer">
-        <span>Sound</span>
+        <span>Sound:</span>
         <label class="game-container__switch">
-          <input type="checkbox">
+          <input type="checkbox" id="checkbox" />
           <span class="game-container__slider"></span>
         </label>
       </div>

@@ -98,6 +98,8 @@ class Engine {
 
   _moveSnakeWrapper() {
     this.snake.move(this.CURRENT_DIRECTION, this.DIRECTIONS);
+    audioEngine.playSound('move');
+
     this.#CAN_TURN_THIS_TICK = true;
     const currentSnakeCoords = this.snake.getSegmentCoordsByIndex(0);
     const snakeIsOutOfBounds =
@@ -118,6 +120,7 @@ class Engine {
     const snakeCollidesWithFood = this.playground.snakeCollidesWithFood(currentSnakeCoords);
 
     if(snakeCollidesWithFood) {
+      audioEngine.playSound('eat');
       this.snake.grow();
       this.playground.editScore(false, false);
     }
@@ -139,7 +142,12 @@ class Engine {
       this.TICK_SPEED)
   }
 
+  newGame () {
+    document.querySelector('#new-game-button').addEventListener('click', this.start())
+  }
+
   start() {
+    document.querySelector('.game-container__new-game-overlays').classList.remove('active');
     this.snake.reset();
     this.playground.renderHighScore(this.playground.SCORE);
     document.addEventListener("keydown", (e) => this._handleKeyDown(e));
@@ -150,6 +158,8 @@ class Engine {
       () => this._moveSnakeWrapper(),
       this.START_TICK_SPEED
     );
+
+    audioEngine.playBackgroundMusic();
   }
 
   _stop() {
@@ -159,6 +169,10 @@ class Engine {
     document.querySelector('.game-container__game-overlays').classList.add('active');
     document.querySelector('.game-container__game-over').classList.add('active');
     this.TICK_SPEED = this.START_TICK_SPEED;
+    audioEngine.stopBackgroundMusic();
+    // audioEngine.
+
+    audioEngine.playSound('dead');
   }
 
   _win () {
