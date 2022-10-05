@@ -68,8 +68,15 @@ class Snake {
     const headSegment = document.querySelector(`#${this.SNAKE_ID_PREFIX}-1`);
     const snakeFaceImg = document.createElement('img');
 
+    const snakeSegment = document.querySelectorAll(`.${this.SNAKE_SEGMENT_CLASS_NAME}`);
+
+    // snakeSegment.setAttribute('background-image', 'img/snake_ptrn.png');
+
+
     snakeFaceImg.setAttribute('src', 'img/face.png');
     snakeFaceImg.setAttribute('id', `${this.SNAKE_ID_PREFIX}-1--face-img`)
+
+
 
     headSegment.appendChild(snakeFaceImg);
   }
