@@ -1,8 +1,8 @@
 class Playground {
   PLAYGROUND_ID = "game-container__playground";
   CLUSTER_SIZE = 20;
-  WIDTH_CLUSTERS = 41;
-  HEIGHT_CLUSTERS = 21;
+  WIDTH_CLUSTERS = 30;
+  HEIGHT_CLUSTERS = 20;
 
   FOOD_IMG = [];
   IMG_NAMES = ["cherry", "lemon", "orange", "strawberry", "watermelon"];
@@ -394,7 +394,7 @@ _arrayContainsObject (allCoords, obj) {
   renderHighScore(score) {
     this.HIGH_SCORE = Math.max(score, this.HIGH_SCORE);
     localStorage.setItem(this.LOCAL_STORAGE_NAME, this.HIGH_SCORE);
-    document.querySelector("#high-score > span").innerHTML = this.HIGH_SCORE;
+    // document.querySelector("#high-score > span").innerHTML = this.HIGH_SCORE;
   }
 
   editScore(gameOver, reset, win) {
