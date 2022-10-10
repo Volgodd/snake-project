@@ -11,7 +11,7 @@
       rel="stylesheet"
     />
     <title>Max`s snake</title>
-    <link rel="icon" href="img/cherry.png" type="image/x-icon">
+    <link rel="icon" href="img/cherry.png" type="image/x-icon" />
     <link rel="stylesheet" href="css/styles.css" />
     <script src="js/snake.js" defer></script>
     <script src="js/engine.js" defer></script>
@@ -24,39 +24,39 @@
   <body>
     <div class="game-container">
       <div class="game-container__scoreboard">
-          <a href="#" class="logo">
-            <img src="img/thnake-logo.png" alt="logo tttthnake" />
-          </a>
-          
-           
-            <h2 id="score">Score: <span> 0</span></h2>
-            <h2 id="completion">Completion: <span>0</span></h2>
-            <!-- <h2 id="high-score">Highscore: <span></span></h2> -->
-         
-        
+        <a href="#" class="logo">
+          <img src="img/thnake-logo.png" alt="logo tttthnake" />
+        </a>
+        <h2 id="score">Score: <span> 0</span></h2>
+        <h2 id="completion">Completion: <span>0</span></h2>
+        <!-- <h2 id="high-score">Highscore: <span></span></h2> -->
       </div>
 
-      <div class="game-container__new-game-overlays">
-        <div id="new-game-button">
-          <button class="game-container__button">Start game</button>
+      <div class="game-container__wrapper">
+        <div class="game-container__new-game-overlays">
+          <button class="game-container__button white-text">Start game</button>
         </div>
-      </div>
 
-      <div class="game-container__game-overlays">
-        <div class="game-container__game-over">
-          <button class="game-container__button">
-            Try again, you're doing great!
-          </button>
-          <h1 class="game-container__game-over-tag">Game over</h1>
-          <h2 class="game-container__last-score">Your score: <span></span></h2>
-          <div class="game-container__win">
-            <button class="game-container__button">New game</button>
-            <h1 class="game-container__win-tag">
-              Congratulations! You're win!
-            </h1>
-            <h2 class="game-container__last-score--win">
-              Your score: <span></span>
+        <div class="game-container__game-overlays">
+          <div class="game-container__game-over">
+            <button class="game-container__button white-text">
+              Play again
+            </button>
+            <h1 class="game-container__game-over-tag white-text">Game over</h1>
+            <h2 class="game-container__last-score white-text">
+              Game thhhcore: <span></span>
             </h2>
+            <div class="game-container__win">
+              <button class="game-container__button white-text">
+                New game
+              </button>
+              <h1 class="game-container__win-tag white-text">
+                Congratulations! You're win!
+              </h1>
+              <h2 class="game-container__last-score--win white-text">
+                Your score: <span></span>
+              </h2>
+            </div>
           </div>
         </div>
       </div>

@@ -149,7 +149,7 @@ class Engine {
   start() {
     document.querySelector('.game-container__new-game-overlays').classList.remove('active');
     this.snake.reset();
-    this.playground.renderHighScore(this.playground.SCORE);
+    // this.playground.renderHighScore(this.playground.SCORE);
     document.addEventListener("keydown", (e) => this._handleKeyDown(e));
 
     this.playground.regenerateFoodImage();
@@ -168,6 +168,9 @@ class Engine {
     this.MOVE_TIMER = null;
     document.querySelector('.game-container__game-overlays').classList.add('active');
     document.querySelector('.game-container__game-over').classList.add('active');
+
+    document.querySelector('#game-container__playground').classList.add('blur');
+
     this.TICK_SPEED = this.START_TICK_SPEED;
     audioEngine.stopBackgroundMusic();
     // audioEngine.
@@ -181,12 +184,15 @@ class Engine {
     this.MOVE_TIMER = null;
     document.querySelector('.game-container__game-overlays').classList.add('active');
     document.querySelector('.game-container__win').classList.add('active');
+    document.querySelector('#game-container__playground').classList.add('blur');
     this.TICK_SPEED = this.START_TICK_SPEED;
   }
 
   _reset () {
     this.playground.editScore(false, true);
     this.CURRENT_DIRECTION = this.DIRECTIONS.RIGHT;
+    document.querySelector('#game-container__playground').classList.remove('blur');
+
   }
 
   _setUpButtons() {
