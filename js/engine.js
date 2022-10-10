@@ -107,14 +107,14 @@ class Engine {
     
     if (snakeIsOutOfBounds) {
       this._stop();
-      this.playground.editScore(true, false);
+      this.playground.editScore(true, false, false);
     }
 
     const snakeSelfCollides = this.snake.selfCollides()
 
     if (snakeSelfCollides) {
       this._stop();
-      this.playground.editScore(true, false);
+      this.playground.editScore(true, false, false);
     }
 
     const snakeCollidesWithFood = this.playground.snakeCollidesWithFood(currentSnakeCoords);
@@ -122,7 +122,7 @@ class Engine {
     if(snakeCollidesWithFood) {
       audioEngine.playSound('eat');
       this.snake.grow();
-      this.playground.editScore(false, false);
+      this.playground.editScore(false, false, false);
     }
 
     if (snakeCollidesWithFood && this.snake.snakeLengthForBoost(true)) {

@@ -132,6 +132,7 @@ body {
 .game-container__game-overlays.active {
   display: block;
   background: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
 }
 
 .game-container__wrapper {
@@ -164,6 +165,7 @@ body {
   align-self: flex-end;
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
 }
 
 .game-container__game-over.active,

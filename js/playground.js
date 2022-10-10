@@ -13,12 +13,18 @@ class Playground {
   SCORE = 0;
   SCORE_STEP = 10;
 
-  LOCAL_STORAGE_NAME = "TTTTNAKEbestScore";
-  HIGH_SCORE;
+  COMPLETION = 0;
+
+  LOCAL_STORAGE_NAME_SCORE = "TTTTNAKEbestScore";
   HIGH_SCORE =
-    localStorage.getItem(this.LOCAL_STORAGE_NAME) === null
+    localStorage.getItem(this.LOCAL_STORAGE_NAME_SCORE) === null
       ? 0
-      : localStorage.getItem(this.LOCAL_STORAGE_NAME);
+      : localStorage.getItem(this.LOCAL_STORAGE_NAME_SCORE);
+
+  // LOCAL_STORAGE_NAME_COMPLETION = 'TtthaneCompletion'
+  // COMPLETION = localStorage.getItem(this.LOCAL_STORAGE_NAME_COMPLETION) === null
+  //     ? 0
+  //     : localStorage.getItem(this.LOCAL_STORAGE_NAME_COMPLETION);
 
   ALL_PLAYFIELD_CLUSTERS = [];
   PLAYGROUND_FREE_CLUSTERS;
@@ -393,15 +399,26 @@ _arrayContainsObject (allCoords, obj) {
 
   renderHighScore(score) {
     this.HIGH_SCORE = Math.max(score, this.HIGH_SCORE);
-    localStorage.setItem(this.LOCAL_STORAGE_NAME, this.HIGH_SCORE);
+    localStorage.setItem(this.LOCAL_STORAGE_NAME_SCORE, this.HIGH_SCORE);
     // document.querySelector("#high-score > span").innerHTML = this.HIGH_SCORE;
   }
 
+  renderCompletion () {
+    this.COMPLETION = Math.floor(snake.SNAKE_SEGMENTS_COORDS.length / (this.WIDTH_CLUSTERS * this.HEIGHT_CLUSTERS) * 100);
+
+    //  localStorage.setItem(this.LOCAL_STORAGE_NAME_COMPLETION, this.COMPLETION);
+
+     document.querySelector('#completion > span').innerHTML = this.COMPLETION;
+     
+     console.log(this.COMPLETION);
+  }
+  
   editScore(gameOver, reset, win) {
     if (!gameOver && !reset && !win) {
       this.SCORE += this.SCORE_STEP;
       this._renderScore(this.SCORE);
       this.renderHighScore(this.SCORE);
+      this.renderCompletion();
     } else if (gameOver && !reset && !win) {
       this._renderScore(this.SCORE);
       this._renderScoreGameOver(this.SCORE);
