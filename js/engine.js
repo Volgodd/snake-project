@@ -10,7 +10,7 @@ class Engine {
   CURRENT_DIRECTION = "right";
   MOVE_TIMER;
 
-  START_TICK_SPEED = 300;
+  START_TICK_SPEED = 800;
   
   TICK_SPEED = this.START_TICK_SPEED;
 
@@ -120,6 +120,8 @@ class Engine {
     const snakeCollidesWithFood = this.playground.snakeCollidesWithFood(currentSnakeCoords);
 
     if(snakeCollidesWithFood) {
+
+       
       audioEngine.playSound('eat');
       this.snake.grow();
       this.playground.editScore(false, false, false);
@@ -189,7 +191,7 @@ class Engine {
   }
 
   _reset () {
-    this.playground.editScore(false, true);
+    this.playground.editScore(false, true, false);
     this.CURRENT_DIRECTION = this.DIRECTIONS.RIGHT;
     document.querySelector('#game-container__playground').classList.remove('blur');
 

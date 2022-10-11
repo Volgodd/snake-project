@@ -35,11 +35,16 @@ class Snake {
   }
 
   snakeLengthForBoost () {
-    const snakeLength = this.SNAKE_SEGMENTS_COORDS.length;
+    // const snakeLength = this.SNAKE_SEGMENTS_COORDS.length;
 
-    if (snakeLength > 2 && snakeLength % 5 === 2) {
-    return true
-    } 
+    // if (snakeLength > 2 && snakeLength % 5 === 2) {
+    // return true
+    // } 
+    // return false
+
+    if (engine.TICK_SPEED > 100 && playground.COMPLETION >= 2 && playground.COMPLETION  % 2  === 0) {
+      return true
+    }
     return false
   }
 
@@ -135,20 +140,40 @@ class Snake {
   }
 
   turnHead (oppositeDir, currentDirection, DIRECTIONS) {
-    const head = document.querySelector(`#${this.SNAKE_ID_PREFIX}-1--face-img`);
+    const head = document.querySelector(`#${this.SNAKE_ID_PREFIX}-1`);
+    let tail = document.querySelector(`#${this.SNAKE_ID_PREFIX}-${this.SNAKE_SEGMENTS_COORDS.length}`);
     
     if (oppositeDir && currentDirection === DIRECTIONS.LEFT) {
       head.classList.remove('snake-segment--head-up', 'snake-segment--head-down');
       head.classList.add('snake-segment--head-left');
+
+      tail.classList.add('border-radius-left');
+      tail.classList.remove('border-radius-right', 'border-radius-top', 'border-radius-bottom');
+
     } else if (oppositeDir && currentDirection === DIRECTIONS.UP) {
       head.classList.remove('snake-segment--head-left', 'snake-segment--head-down');
       head.classList.add('snake-segment--head-up');
+
+      tail.classList.add('border-radius-top');
+      tail.classList.remove('border-radius-left', 'border-radius-right', 'border-radius-bottom');
+
     } else if (oppositeDir && currentDirection === DIRECTIONS.DOWN) {
       head.classList.remove('snake-segment--head-left', 'snake-segment--head-up');
       head.classList.add('snake-segment--head-down');
+
+      tail.classList.add('border-radius-bottom');
+      tail.classList.remove('border-radius-left', 'border-radius-top', 'border-radius-right');
+      
     } else if (oppositeDir && currentDirection === DIRECTIONS.RIGHT) {
       head.classList.remove('snake-segment--head-left', 'snake-segment--head-up', 'snake-segment--head-down');
+
+      tail.classList.add('border-radius-right');
+      tail.classList.remove('border-radius-left', 'border-radius-top', 'border-radius-bottom')
     }
+  }
+
+  tailRotation (currentDirection, DIRECTIONS) {
+    if (currentDirection === DIRECTIONS.LEFT)
   }
 
   selfCollides() {
