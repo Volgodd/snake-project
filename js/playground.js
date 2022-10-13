@@ -417,8 +417,6 @@ class Playground {
     //  localStorage.setItem(this.LOCAL_STORAGE_NAME_COMPLETION, this.COMPLETION);
 
     document.querySelector("#completion > span").innerHTML = this.COMPLETION;
-
-    console.log(this.COMPLETION);
   }
 
   editScore(gameOver, reset, win) {

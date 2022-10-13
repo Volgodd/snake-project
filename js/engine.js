@@ -10,7 +10,7 @@ class Engine {
   CURRENT_DIRECTION = "right";
   MOVE_TIMER;
 
-  START_TICK_SPEED = 800;
+  START_TICK_SPEED = 300;
   
   TICK_SPEED = this.START_TICK_SPEED;
 
@@ -104,6 +104,8 @@ class Engine {
     const currentSnakeCoords = this.snake.getSegmentCoordsByIndex(0);
     const snakeIsOutOfBounds =
       this.playground.outOfBoundsIsTrue(currentSnakeCoords);
+
+    this.snake.tailRotation();
     
     if (snakeIsOutOfBounds) {
       this._stop();
