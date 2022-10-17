@@ -13,7 +13,7 @@ body {
 }
 
 .blur {
-  /* filter: blur(5px); */
+  filter: blur(5px);
   background: rgba(0, 0, 0, 0.4);
   box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
@@ -76,7 +76,7 @@ body {
     rgba(255, 187, 187, 1) 0%,
     rgba(205, 77, 116, 1) 100%
   ); */
-  /* background: linear-gradient(180deg, #6bbf59 0%, #0b6e4f 100%); */
+  background: linear-gradient(180deg, #6bbf59 0%, #0b6e4f 100%);
   box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
   border-radius: 15px;
   width: calc(var(--cluster-size) * var(--width-clusters));
@@ -94,7 +94,7 @@ body {
   left: var(--x-coord);
   top: var(--y-coord);
 
-  /* background-image: url("../img/snake_ptrn.png"); */
+  background-image: url("../img/snake_ptrn.png");
   background-size:  500%;
 
   /* transition: top 1s ease-in-out, left 1s ease-in-out; */
