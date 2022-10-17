@@ -104,25 +104,29 @@ class Engine {
     const currentSnakeCoords = this.snake.getSegmentCoordsByIndex(0);
     const snakeIsOutOfBounds =
       this.playground.outOfBoundsIsTrue(currentSnakeCoords);
+
+    this.snake.tailRotation();
     
     if (snakeIsOutOfBounds) {
       this._stop();
-      this.playground.editScore(true, false);
+      this.playground.editScore(true, false, false);
     }
 
     const snakeSelfCollides = this.snake.selfCollides()
 
     if (snakeSelfCollides) {
       this._stop();
-      this.playground.editScore(true, false);
+      this.playground.editScore(true, false, false);
     }
 
     const snakeCollidesWithFood = this.playground.snakeCollidesWithFood(currentSnakeCoords);
 
     if(snakeCollidesWithFood) {
+
+       
       audioEngine.playSound('eat');
       this.snake.grow();
-      this.playground.editScore(false, false);
+      this.playground.editScore(false, false, false);
     }
 
     if (snakeCollidesWithFood && this.snake.snakeLengthForBoost(true)) {
@@ -189,7 +193,7 @@ class Engine {
   }
 
   _reset () {
-    this.playground.editScore(false, true);
+    this.playground.editScore(false, true, false);
     this.CURRENT_DIRECTION = this.DIRECTIONS.RIGHT;
     document.querySelector('#game-container__playground').classList.remove('blur');
 
