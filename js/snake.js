@@ -189,13 +189,13 @@ class Snake {
     const { x: beforeTailX, y: beforeTailY } =
       this.SNAKE_SEGMENTS_COORDS[previousTailIndex];
 
-    if (tailX == beforeTailX && tailY > beforeTailY) {
+    if (tailX === beforeTailX && tailY > beforeTailY) {
       return "up";
-    } else if (tailX == beforeTailX && tailY < beforeTailY) {
+    } else if (tailX === beforeTailX && tailY < beforeTailY) {
       return "down";
-    } else if (tailY == beforeTailY && tailX < beforeTailX) {
+    } else if (tailY === beforeTailY && tailX < beforeTailX) {
       return "right";
-    } else if (tailY == beforeTailY && tailX > beforeTailX) {
+    } else if (tailY === beforeTailY && tailX > beforeTailX) {
       return "left";
     }
   }
@@ -216,7 +216,7 @@ class Snake {
 
     const direction = this._getTailDirection();
 
-    if (direction == "up") {
+    if (direction === "up") {
       currentTailDom.classList.add(classUp);
       currentTailDom.classList.remove(classRight, classDown, classLeft);
       previousTailDom.classList.remove(
@@ -225,7 +225,7 @@ class Snake {
         classLeft,
         classUp
       );
-    } else if (direction == "down") {
+    } else if (direction === "down") {
       currentTailDom.classList.add(classDown);
       currentTailDom.classList.remove(classRight, classUp, classLeft);
       previousTailDom.classList.remove(
@@ -234,7 +234,7 @@ class Snake {
         classLeft,
         classUp
       );
-    } else if (direction == "left") {
+    } else if (direction === "left") {
       currentTailDom.classList.add(classLeft);
       currentTailDom.classList.remove(classRight, classUp, classDown);
       previousTailDom.classList.remove(
@@ -243,7 +243,7 @@ class Snake {
         classLeft,
         classUp
       );
-    } else if (direction == "right") {
+    } else if (direction === "right") {
       currentTailDom.classList.add(classRight);
       currentTailDom.classList.remove(classDown, classUp, classLeft);
       previousTailDom.classList.remove(
