@@ -153,7 +153,7 @@ class Engine {
   start() {
     document.querySelector('.game-container__new-game-overlays').classList.remove('active');
     this.snake.reset();
-    // this.playground.renderHighScore(this.playground.SCORE);
+
     document.addEventListener("keydown", (e) => this._handleKeyDown(e));
 
     this.playground.regenerateFoodImage();
@@ -177,7 +177,6 @@ class Engine {
 
     this.TICK_SPEED = this.START_TICK_SPEED;
     audioEngine.stopBackgroundMusic();
-    // audioEngine.
 
     audioEngine.playSound('dead');
   }
@@ -196,7 +195,6 @@ class Engine {
     this.playground.editScore(false, true, false);
     this.CURRENT_DIRECTION = this.DIRECTIONS.RIGHT;
     document.querySelector('#game-container__playground').classList.remove('blur');
-
   }
 
   _setUpButtons() {
@@ -209,5 +207,4 @@ class Engine {
     })
     // forEach здесь нужен для того, чтобы eventListener добавлялся на каждый дом, который найдет querySelectorAll
   }
-
 }

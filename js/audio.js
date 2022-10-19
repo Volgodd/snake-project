@@ -7,31 +7,44 @@ class AudioEngine {
 
   CHECKBOX_MUTE_CONTROL = document.querySelector("#checkbox");
 
+  LOCAL_STORAGE_NAME_CHECKBOX = "Checkbox";
+
   constructor() {
-    this.CHECKBOX_MUTE_CONTROL.checked = true;
+    this.CHECKBOX_MUTE_CONTROL.checked = false;
     this.BACKGROUND_MUSIC.loop = true;
 
-    this.CHECKBOX_MUTE_CONTROL.addEventListener("change", (e) =>
-      this.muteControlDriver()
-    );
+    this.CHECKBOX_MUTE_CONTROL.addEventListener("change", (e) => {
+      this.muteControlDriver();
+      this.checkboxStateLocalStorage();
+    });
 
     this.BACKGROUND_MUSIC.addEventListener("timeupdate", function () {
-      console.log('timeupdate event fired', this.currentTime)
       const buffer = 0.44;
 
-      if (
-        this.currentTime >
-        this.duration - buffer
-      ) {
+      if (this.currentTime > this.duration - buffer) {
         this.currentTime = 0;
         this.play();
-
-        console.log('music is ready')
       }
     });
+    this.checkPreviousMuteStatus()
   }
 
   isMuted = () => !this.CHECKBOX_MUTE_CONTROL.checked;
+
+  checkPreviousMuteStatus() {
+    if (localStorage.getItem(this.LOCAL_STORAGE_NAME_CHECKBOX) === "unchecked") {
+      this.CHECKBOX_MUTE_CONTROL.checked = false;
+    } else if (localStorage.getItem(this.LOCAL_STORAGE_NAME_CHECKBOX) === "checked") {
+      this.CHECKBOX_MUTE_CONTROL.checked = true;
+    }
+  }
+
+  checkboxStateLocalStorage() {
+    if (!this.CHECKBOX_MUTE_CONTROL.checked) {
+      localStorage.setItem(this.LOCAL_STORAGE_NAME_CHECKBOX, "unchecked");
+    } else if (this.CHECKBOX_MUTE_CONTROL.checked)
+      localStorage.setItem(this.LOCAL_STORAGE_NAME_CHECKBOX, "checked");
+  }
 
   muteControlDriver() {
     if (!this.isMuted()) {
@@ -41,17 +54,11 @@ class AudioEngine {
     }
   }
 
-
   playBackgroundMusic() {
     if (!this.isMuted()) {
-      console.log('call _gaplessMusicLoop()')
       this.BACKGROUND_MUSIC.play();
-
-      // console.log('music is ready')
-
     }
   }
-
 
   stopBackgroundMusic() {
     this.BACKGROUND_MUSIC.pause();
