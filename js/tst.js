@@ -1,3 +1,11 @@
+const LOGGING = true;
+// const SECOND = 300;
+function log(message) {
+  if (LOGGING) {
+    console.log(message)
+  }
+}
+
 const widthSegs = 4;
 const heightSegs = 5;
 
@@ -11,7 +19,7 @@ function generateFreeClusters() {
     for(let x = 0; x < widthSegs; x++) {
 
       for (let i = 0; i < snakeCoords.length; i++) {
-        console.log(`X: ${x} | Y: ${y}`);
+        log(`X: ${x} | Y: ${y}`);
         if (snakeCoords[i].x !== x || snakeCoords[i].y !== y ) {
           /// push shit here
           freeClusters.push({x, y})
@@ -23,7 +31,7 @@ function generateFreeClusters() {
 }
 
 // generateFreeClusters()
-// console.log(freeClusters)
+// log(freeClusters)
 //freeClusters[Math.round(Math.random()*freeClusters.length)]
 
 
@@ -43,44 +51,44 @@ function generateFreeClusters() {
 
 
 freeClustersScope () {
-  console.log("called")
+  log("called")
   this.PLAYFIELD_COORDS = [];
   let snakeCoords = snake.SNAKE_SEGMENTS_COORDS;
 
   for(let y = 0; y < this.HEIGHT_CLUSTERS * this.CLUSTER_SIZE; y += 20) {
-    // console.log('Y: ', y)
+    // log('Y: ', y)
     for(let x = 0; x < this.WIDTH_CLUSTERS * this.CLUSTER_SIZE; x += 20) {
-      // console.log('X: ', x)
+      // log('X: ', x)
       //x: 0; y: 0
       for (let i = 0; i < snakeCoords.length ; i++) {
-        // console.log(`X: ${x} | Y: ${y}`);
-        console.log("push made")
+        // log(`X: ${x} | Y: ${y}`);
+        log("push made")
 
 
         
         if ((snakeCoords[i].x !== x || snakeCoords[i].y !== y) && (snakeCoords[i].y !== y || snakeCoords[i].x !== x )) {
-          console.log(`Comapring new X: ${x} with Snake's X: ${snakeCoords[i].x}`)
+          log(`Comapring new X: ${x} with Snake's X: ${snakeCoords[i].x}`)
           // if (snakeCoords[i].y !== y) {
-          // console.log(`Comapring new Y: ${y} with Snake's Y: ${snakeCoords[i].y}`)
+          // log(`Comapring new Y: ${y} with Snake's Y: ${snakeCoords[i].y}`)
           this.PLAYFIELD_COORDS.push({x, y})
           // } 
         }
           
         // for(let y = 0; y < this.HEIGHT_CLUSTERS * this.CLUSTER_SIZE && (y === 0 || (y % 20 === 0)); y + 20) {
-        //   console.log('Y: ', y)
+        //   log('Y: ', y)
         //   for(let x = 0; x < this.WIDTH_CLUSTERS * this.CLUSTER_SIZE && (x === 0 || (x % 20 === 0)); x + 20) {
 
         // if (snakeCoords[i].x !== x && snakeCoords[i].y !== y) {
         //   /// push shit here
-        //   // console.log(`Comapring new X: ${x} with Snake's X: ${snakeCoords[i].x}`)
+        //   // log(`Comapring new X: ${x} with Snake's X: ${snakeCoords[i].x}`)
         //   this.PLAYFIELD_COORDS.push({x, y})
         // }
 
 
         // if (snakeCoords[i].x !== x || snakeCoords[i].y !== y) {
-        //   console.log(`Comapring new X: ${x} with Snake's X: ${snakeCoords[i].x}`)
+        //   log(`Comapring new X: ${x} with Snake's X: ${snakeCoords[i].x}`)
         //   if (snakeCoords[i].y !== y) {
-        //   console.log(`Comapring new Y: ${y} with Snake's Y: ${snakeCoords[i].y}`)
+        //   log(`Comapring new Y: ${y} with Snake's Y: ${snakeCoords[i].y}`)
         //   this.PLAYFIELD_COORDS.push({x, y})
         //   } 
       }
@@ -88,7 +96,7 @@ freeClustersScope () {
 }
 
 
-console.log(this.PLAYFIELD_COORDS)
+log(this.PLAYFIELD_COORDS)
 }
 
 
@@ -117,7 +125,7 @@ freeClustersScopeVar2() {
           //   });
        
       } else {
-        console.log('coords snake === coords playground, ');
+        log('coords snake === coords playground, ');
         this.PLAYFIELD_COORDS.push({
           x: allClusters[index].x,
           y: allClusters[index].y,
@@ -131,7 +139,7 @@ freeClustersScopeVar2() {
   }
 
  
-  console.log(this.PLAYFIELD_COORDS);
+  log(this.PLAYFIELD_COORDS);
 
   // code is working. Problem is that coords duplicated: arr contains as much collection of pushed coords, as snake length
 }

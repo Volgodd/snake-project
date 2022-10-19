@@ -109,14 +109,15 @@ class Engine {
     
     if (snakeIsOutOfBounds) {
       this._stop();
-      this.playground.editScore(true, false, false);
+      
+      this.playground.editScore({gameOver: true, reset: false, win: false});
     }
 
     const snakeSelfCollides = this.snake.selfCollides()
 
     if (snakeSelfCollides) {
       this._stop();
-      this.playground.editScore(true, false, false);
+      this.playground.editScore({gameOver: true, reset: false, win: false});
     }
 
     const snakeCollidesWithFood = this.playground.snakeCollidesWithFood(currentSnakeCoords);
@@ -126,16 +127,16 @@ class Engine {
        
       audioEngine.playSound('eat');
       this.snake.grow();
-      this.playground.editScore(false, false, false);
+      this.playground.editScore({gameOver: false, reset: false, win: false});
     }
 
     if (snakeCollidesWithFood && this.snake.snakeLengthForBoost(true)) {
       this._boostSnakeSpeed();
     }
 
-    if (this.playground.PLAYGROUND_FREE_CLUSTERS.length === 0) {
+    if (this.playground.PLAYGROUND_CLUSTERS_FREE.length === 0) {
       this._win();
-      this.playground.editScore(false, false, true);
+      this.playground.editScore({gameOver: false, reset: false, win: true});
     }
   } 
 
@@ -156,7 +157,7 @@ class Engine {
 
     document.addEventListener("keydown", (e) => this._handleKeyDown(e));
 
-    this.playground.regenerateFoodImage();
+    this.playground.drawRandomFoodImage();
 
     this.MOVE_TIMER = setInterval(
       () => this._moveSnakeWrapper(),
@@ -192,7 +193,7 @@ class Engine {
   }
 
   _reset () {
-    this.playground.editScore(false, true, false);
+    this.playground.editScore({gameOver: false, reset: true, win: false});
     this.CURRENT_DIRECTION = this.DIRECTIONS.RIGHT;
     document.querySelector('#game-container__playground').classList.remove('blur');
   }
