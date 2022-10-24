@@ -26,15 +26,20 @@ class AudioEngine {
         this.play();
       }
     });
-    this.checkPreviousMuteStatus()
+
+    this.checkPreviousMuteStatus();
   }
 
   isMuted = () => !this.CHECKBOX_MUTE_CONTROL.checked;
 
   checkPreviousMuteStatus() {
-    if (localStorage.getItem(this.LOCAL_STORAGE_NAME_CHECKBOX) === "unchecked") {
+    if (
+      localStorage.getItem(this.LOCAL_STORAGE_NAME_CHECKBOX) === "unchecked"
+    ) {
       this.CHECKBOX_MUTE_CONTROL.checked = false;
-    } else if (localStorage.getItem(this.LOCAL_STORAGE_NAME_CHECKBOX) === "checked") {
+    } else if (
+      localStorage.getItem(this.LOCAL_STORAGE_NAME_CHECKBOX) === "checked"
+    ) {
       this.CHECKBOX_MUTE_CONTROL.checked = true;
     }
   }
