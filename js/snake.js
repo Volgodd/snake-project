@@ -33,14 +33,14 @@ class Snake {
     this.SNAKE_SEGMENTS_COORDS.push({ x, y });
   }
 
+  /**
+   * Detects length for boost speed
+   * @param {engine.TICK_SPEED}  tick speed of a game
+   * @param {playground.COMPLETION} curent completion
+   * @returns boolean
+   */
+
   snakeLengthForBoost() {
-    // const snakeLength = this.SNAKE_SEGMENTS_COORDS.length;
-
-    // if (snakeLength > 2 && snakeLength % 5 === 2) {
-    // return true
-    // }
-    // return false
-
     if (
       engine.TICK_SPEED > 100 &&
       playground.COMPLETION >= 2 &&
@@ -78,12 +78,6 @@ class Snake {
 
     const headSegment = document.querySelector(`#${this.SNAKE_ID_PREFIX}-1`);
     const snakeFaceImg = document.createElement("img");
-
-    const snakeSegment = document.querySelectorAll(
-      `.${this.SNAKE_SEGMENT_CLASS_NAME}`
-    );
-
-    // snakeSegment.setAttribute('background-image', 'img/snake_ptrn.png');
 
     snakeFaceImg.setAttribute("src", "img/face.png");
     snakeFaceImg.setAttribute("id", `${this.SNAKE_ID_PREFIX}-1--face-img`);
@@ -152,29 +146,35 @@ class Snake {
   turnHead(oppositeDir, currentDirection, DIRECTIONS) {
     const head = document.querySelector(`#${this.SNAKE_ID_PREFIX}-1`);
 
+    const snakeSegmentClassList = "snake-segment";
+    const headLeft = "--head-left";
+    const headRight = "--head-left";
+    const headUp = "--head-up";
+    const headDown = "--head-down";
+
     if (oppositeDir && currentDirection === DIRECTIONS.LEFT) {
       head.classList.remove(
-        "snake-segment--head-up",
-        "snake-segment--head-down"
+        `${snakeSegmentClassList}${headUp}`,
+        `${snakeSegmentClassList}${headDown}`
       );
-      head.classList.add("snake-segment--head-left");
+      head.classList.add(`${snakeSegmentClassList}${headLeft}`);
     } else if (oppositeDir && currentDirection === DIRECTIONS.UP) {
       head.classList.remove(
-        "snake-segment--head-left",
-        "snake-segment--head-down"
+        `${snakeSegmentClassList}${headLeft}`,
+        `${snakeSegmentClassList}${headDown}`
       );
-      head.classList.add("snake-segment--head-up");
+      head.classList.add(`${snakeSegmentClassList}${headUp}`);
     } else if (oppositeDir && currentDirection === DIRECTIONS.DOWN) {
       head.classList.remove(
-        "snake-segment--head-left",
-        "snake-segment--head-up"
+        `${snakeSegmentClassList}${headUp}`,
+        `${snakeSegmentClassList}${headLeft}`
       );
-      head.classList.add("snake-segment--head-down");
+      head.classList.add(`${snakeSegmentClassList}${headDown}`);
     } else if (oppositeDir && currentDirection === DIRECTIONS.RIGHT) {
       head.classList.remove(
-        "snake-segment--head-left",
-        "snake-segment--head-up",
-        "snake-segment--head-down"
+        `${snakeSegmentClassList}${headUp}`,
+        `${snakeSegmentClassList}${headDown}`,
+        `${snakeSegmentClassList}${headLeft}`
       );
     }
   }
@@ -219,40 +219,18 @@ class Snake {
     if (direction === "up") {
       currentTailDom.classList.add(classUp);
       currentTailDom.classList.remove(classRight, classDown, classLeft);
-      previousTailDom.classList.remove(
-        classRight,
-        classDown,
-        classLeft,
-        classUp
-      );
     } else if (direction === "down") {
       currentTailDom.classList.add(classDown);
       currentTailDom.classList.remove(classRight, classUp, classLeft);
-      previousTailDom.classList.remove(
-        classRight,
-        classDown,
-        classLeft,
-        classUp
-      );
     } else if (direction === "left") {
       currentTailDom.classList.add(classLeft);
       currentTailDom.classList.remove(classRight, classUp, classDown);
-      previousTailDom.classList.remove(
-        classRight,
-        classDown,
-        classLeft,
-        classUp
-      );
     } else if (direction === "right") {
       currentTailDom.classList.add(classRight);
       currentTailDom.classList.remove(classDown, classUp, classLeft);
-      previousTailDom.classList.remove(
-        classRight,
-        classDown,
-        classLeft,
-        classUp
-      );
     }
+
+    previousTailDom.classList.remove(classRight, classDown, classLeft, classUp);
   }
 
   selfCollides() {

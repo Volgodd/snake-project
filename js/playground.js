@@ -5,139 +5,56 @@ class Playground {
   HEIGHT_CLUSTERS = 20;
 
   FOOD_IMG = [];
-  IMG_NAMES = ["cherry", "lemon", "orange", "strawberry", "watermelon"];
-  FOOD_ID = "food_img";
   DRAWN_FOOD_X = 0;
   DRAWN_FOOD_Y = 0;
 
+  SCORE_GAME_OVER_DOM = document.querySelector(".game-container__last-score > span")
+  SCORE_DOM = document.querySelector("h2 > span");
   SCORE = 0;
   SCORE_STEP = 10;
 
+  COMPLETION_DOM = document.querySelector("#completion > span");
   COMPLETION = 0;
 
-  LOCAL_STORAGE_NAME_SCORE = "TTTTNAKEbestScore";
-  HIGH_SCORE =
-    localStorage.getItem(this.LOCAL_STORAGE_NAME_SCORE) === null
-      ? 0
-      : localStorage.getItem(this.LOCAL_STORAGE_NAME_SCORE);
+  PLAYGROUND_DOM = null;
+  PLAYGROUND_CLUSTERS_ALL = [];
+  PLAYGROUND_CLUSTERS_FREE;
 
-  // LOCAL_STORAGE_NAME_COMPLETION = 'TtthaneCompletion'
-  // COMPLETION = localStorage.getItem(this.LOCAL_STORAGE_NAME_COMPLETION) === null
-  //     ? 0
-  //     : localStorage.getItem(this.LOCAL_STORAGE_NAME_COMPLETION);
-
-  ALL_PLAYFIELD_CLUSTERS = [];
-  PLAYGROUND_FREE_CLUSTERS;
-
-  // для тестового кода, не используется в конечной версии
-  PLAYFIELD_COORDS = [];
   CAN_ADD_COORDS = true;
   COMPARE_COORDS_SUCCESS;
   TEST_SNAKE_CORDS_COMPARE;
 
   constructor() {
-    this.gameContainer = document.querySelector(".game-container");
-    this.playField = document.createElement("div");
-    this.playField.setAttribute("id", this.PLAYGROUND_ID);
+    const gameContainer = document.querySelector(".game-container");
+    this.PLAYGROUND_DOM = document.createElement("div");
+    this.PLAYGROUND_DOM.setAttribute("id", this.PLAYGROUND_ID);
 
-    this.calculatedWidth = this.CLUSTER_SIZE * this.WIDTH_CLUSTERS;
-    this.calculatedHeight = this.CLUSTER_SIZE * this.HEIGHT_CLUSTERS;
+    // this.calculatedWidth = this.CLUSTER_SIZE * this.WIDTH_CLUSTERS;
+    // this.calculatedHeight = this.CLUSTER_SIZE * this.HEIGHT_CLUSTERS;
 
-    this.gameContainer.style.cssText += `--cluster-size: ${this.CLUSTER_SIZE}px; --width-clusters: ${this.WIDTH_CLUSTERS};  --height-clusters:  ${this.HEIGHT_CLUSTERS};`;
+    gameContainer.style.cssText += `--cluster-size: ${this.CLUSTER_SIZE}px; --width-clusters: ${this.WIDTH_CLUSTERS};  --height-clusters:  ${this.HEIGHT_CLUSTERS};`;
 
-    this.gameContainer.appendChild(this.playField);
+    gameContainer.appendChild(this.PLAYGROUND_DOM);
 
     this._generateAndPreloadImageArray();
-
-    log("Playfield created");
   }
 
-  freeClustersScope() {
-    console.log("called");
-    this.PLAYFIELD_COORDS = [];
-    let snakeCoords = snake.SNAKE_SEGMENTS_COORDS;
+  _generateAllPlaygroundClusters() {
+    this.PLAYGROUND_CLUSTERS_ALL = [];
 
     for (let y = 0; y < this.HEIGHT_CLUSTERS * this.CLUSTER_SIZE; y += 20) {
-      // console.log('Y: ', y)
       for (let x = 0; x < this.WIDTH_CLUSTERS * this.CLUSTER_SIZE; x += 20) {
-        // console.log('X: ', x)
-        //x: 0; y: 0
-        for (let i = 0; i < snakeCoords.length; i++) {
-          // console.log(`X: ${x} | Y: ${y}`);
-          console.log("push made");
-
-          if (snakeCoords[i].x !== x) {
-            if (snakeCoords[i].y !== y) {
-              this.PLAYFIELD_COORDS.push({ x, y });
-            } else if (snakeCoords[i].y === y) {
-              if (snakeCoords[i].x !== x) {
-                this.PLAYFIELD_COORDS.push({ x, y });
-              } else {
-                console.log("1");
-              }
-            } else if (snakeCoords[i].x === x) {
-              if (snakeCoords[i].y !== y) {
-                this.PLAYFIELD_COORDS.push({ x, y });
-              } else {
-                console.log("2");
-              }
-            }
-          }
-
-          //           if (snakeCoords[i].x !== x) {
-          //   if (snakeCoords[i].y !== y)
-          //   this.PLAYFIELD_COORDS.push({x, y})
-          // } else if (snakeCoords[i].x === x) {
-          //     if (snakeCoords[i].y === y) {
-
-          //     }
-          // }
-
-          // for(let y = 0; y < this.HEIGHT_CLUSTERS * this.CLUSTER_SIZE && (y === 0 || (y % 20 === 0)); y + 20) {
-          //   console.log('Y: ', y)
-          //   for(let x = 0; x < this.WIDTH_CLUSTERS * this.CLUSTER_SIZE && (x === 0 || (x % 20 === 0)); x + 20) {
-
-          // if (snakeCoords[i].x !== x && snakeCoords[i].y !== y) {
-          //   /// push shit here
-          //   // console.log(`Comapring new X: ${x} with Snake's X: ${snakeCoords[i].x}`)
-          //   this.PLAYFIELD_COORDS.push({x, y})
-          // }
-
-          // if (snakeCoords[i].x !== x || snakeCoords[i].y !== y) {
-          //   console.log(`Comapring new X: ${x} with Snake's X: ${snakeCoords[i].x}`)
-          //   if (snakeCoords[i].y !== y) {
-          //   console.log(`Comapring new Y: ${y} with Snake's Y: ${snakeCoords[i].y}`)
-          //   this.PLAYFIELD_COORDS.push({x, y})
-          //   }
-        }
+        this.PLAYGROUND_CLUSTERS_ALL.push({ x, y });
       }
     }
-
-    console.log(this.PLAYFIELD_COORDS);
   }
 
-  _generateAllPlayfieldClusters() {
-    this.ALL_PLAYFIELD_CLUSTERS = [];
-    for (let y = 0; y < this.HEIGHT_CLUSTERS * this.CLUSTER_SIZE; y += 20) {
-      // console.log('Y: ', y)
-      for (let x = 0; x < this.WIDTH_CLUSTERS * this.CLUSTER_SIZE; x += 20) {
-        // console.log('X: ', x);
-        this.ALL_PLAYFIELD_CLUSTERS.push({ x, y });
-      }
-    }
-    // console.log(this.ALL_PLAYFIELD_CLUSTERS);
-  }
-
-  _compareCoords(snakeX, snakeY, playfieldX, playfieldY) {
-    if (snakeX !== playfieldX || snakeY !== playfieldY) {
+  _compareCoords(snakeX, snakeY, playgroundX, playgroundY) {
+    if (snakeX !== playgroundX || snakeY !== playgroundY) {
       return (this.COMPARE_COORDS_SUCCESS = true);
     } else {
       return (this.COMPARE_COORDS_SUCCESS = false);
     }
-    // else if (snakeX === playfieldX || snakeY === playfieldY) {
-
-    //   return false;
-    // }
   }
 
   _findClusters(clusters, index) {
@@ -154,116 +71,39 @@ class Playground {
     // allClusters.includes(allClusters.find(el => el.x === allClusters[index].x && el.y === allClusters[index].y ))
   }
 
-  _arrayContainsObject(allCoords, obj) {
-    if (allCoords.some((e) => e.x === obj.x && e.y === obj.y)) {
+  _playgroundCoordsHasCoords(coordsObject) {
+    if (this.PLAYGROUND_CLUSTERS_ALL.some((object) => object.x === coordsObject.x && object.y === coordsObject.y)) {
       return true;
-
-      // this.CAN_ADD_COORDS = false;
-      // this.TEST_SNAKE_CORDS_COMPARE = false;
-
-      // } else
-      // this.CAN_ADD_COORDS = true;
-      // this.TEST_SNAKE_CORDS_COMPARE = true;
     }
+
+    return false
   }
 
   _generateFreeClusters() {
-    this._generateAllPlayfieldClusters();
-    this.PLAYGROUND_FREE_CLUSTERS = [];
+    this._generateAllPlaygroundClusters();
+    this.PLAYGROUND_CLUSTERS_FREE = [];
 
     let snakeCoords = snake.SNAKE_SEGMENTS_COORDS;
-    let allClusters = this.ALL_PLAYFIELD_CLUSTERS;
+    let allClusters = this.PLAYGROUND_CLUSTERS_ALL;
 
     for (let i = 0; i < snakeCoords.length; i++) {
-      let snakeCoordsObject = { x: snakeCoords[i].x, y: snakeCoords[i].y };
-      // console.log(snakeCoordsObject);
-      if (this._arrayContainsObject(allClusters, snakeCoordsObject)) {
-        let index = allClusters.findIndex((i) => {
-          return i.x === snakeCoordsObject.x && i.y === snakeCoordsObject.y;
-        });
-        // console.log(index)
+      const snakeCoordsObject = { x: snakeCoords[i].x, y: snakeCoords[i].y };
 
-        allClusters.splice(index, 1);
+      if (this._playgroundCoordsHasCoords(snakeCoordsObject)) {
+        const clusterIndex = allClusters.findIndex((i) => i.x === snakeCoordsObject.x && i.y === snakeCoordsObject.y);
+
+        allClusters.splice(clusterIndex, 1);
       }
     }
-    this.PLAYGROUND_FREE_CLUSTERS = allClusters;
 
-    if (this.PLAYGROUND_FREE_CLUSTERS.length === 0) {
-    }
-  }
-
-  _freeClustersScopeVar2() {
-    this._generateAllPlayfieldClusters();
-    this.PLAYFIELD_COORDS = [];
-
-    let snakeCoords = snake.SNAKE_SEGMENTS_COORDS;
-    let allClusters = this.ALL_PLAYFIELD_CLUSTERS;
-
-    for (let i = 0; i < snakeCoords.length; i++) {
-      for (let index = 0; index < allClusters.length; index++) {
-        let snakeCoordsObject = { x: snakeCoords[i].x, y: snakeCoords[i].y };
-        let playgroundCoordsObject = {
-          x: allClusters[index].x,
-          y: allClusters[index].y,
-        };
-
-        this._arrayContainsObject(allClusters, snakeCoordsObject);
-        this._arrayContainsObject(
-          this.PLAYFIELD_COORDS,
-          playgroundCoordsObject
-        );
-
-        // this._arrayContainsObject(this.PLAYFIELD_COORDS, playgroundCoordsObject);
-        // this._compareCoords(snakeCoords[i].x, snakeCoords[i].y, allClusters[index].x, allClusters[index].y)
-
-        console.log(playgroundCoordsObject);
-        console.log(snakeCoordsObject);
-
-        // console.log(this.COMPARE_COORDS_SUCCESS);
-
-        if (this.CAN_ADD_COORDS && this.TEST_SNAKE_CORDS_COMPARE) {
-          //this.COMPARE_COORDS_SUCCESS
-          // && this.CAN_ADD_COORDS
-          this.PLAYFIELD_COORDS.push(playgroundCoordsObject);
-
-          console.log("push made");
-          // this._arrayContainsObject(this.PLAYFIELD_COORDS, playgroundCoordsObject);
-
-          // console.log(this.CAN_ADD_COORDS);
-          // if (this.CAN_ADD_COORDS) {
-
-          //   this.PLAYFIELD_COORDS.push(playgroundCoordsObject);
-
-          //   console.log('push made')
-          // }
-        } else {
-          console.log("elseeeee");
-        }
-
-        // this._findClusters(allClusters, index, allClusters[index].x, allClusters[index].y);
-
-        // if (this.CAN_ADD_COORDS) {
-        //   // t
-        // }
-      }
-
-      // else {
-      //   console.log("coords snake === coords playground, ");
-      //   // this.PLAYFIELD_COORDS.push({
-      //   //   x: allClusters[index].x,
-      //   //   y: allClusters[index].y,
-      //   //   });
-      // }
-    }
-
-    console.log(this.PLAYFIELD_COORDS);
-
-    // code is working. Problem is that coords duplicated: arr contains as much collection of pushed coords, as snake length
+    this.PLAYGROUND_CLUSTERS_FREE = allClusters;
   }
 
   _generateAndPreloadImageArray() {
-    for (let imageNameIndex in this.IMG_NAMES) {
-      const imageName = this.IMG_NAMES[imageNameIndex];
+    const imgNames = ["cherry", "lemon", "orange", "strawberry", "watermelon"];
+
+    for (let imageNameIndex in imgNames) {
+      const imageName = imgNames[imageNameIndex];
 
       const foodImage = new Image();
       foodImage.src = `img/${imageName}.png`;
@@ -280,42 +120,18 @@ class Playground {
   }
 
   _getRandomFoodImageCoords() {
-    // const xCluster = this._randomIntFromInterval(0, this.WIDTH_CLUSTERS - 1);
-    // const yCluster = this._randomIntFromInterval(0, this.HEIGHT_CLUSTERS - 1);
-
-    // const xCoord = xCluster * this.CLUSTER_SIZE;
-    // const yCoord = yCluster * this.CLUSTER_SIZE;
-
-    // return { x: xCoord, y: yCoord };
-    //этот код использовался до того, как появилась функция подсчета PLAYGROUND_FREE_CLUSTERS;
-
     const randomCoordsObjectByIndex = Math.round(
-      Math.random() * (this.PLAYGROUND_FREE_CLUSTERS.length - 1)
+      Math.random() * (this.PLAYGROUND_CLUSTERS_FREE.length - 1)
     );
 
-    return this.PLAYGROUND_FREE_CLUSTERS[randomCoordsObjectByIndex];
+    return this.PLAYGROUND_CLUSTERS_FREE[randomCoordsObjectByIndex];
   }
 
-  _drawRandomFoodImageAtCoords() {
-    const chosenImageIndex = Math.round(
-      Math.random() * (this.FOOD_IMG.length - 1)
-    );
-    const chosenImage = this.FOOD_IMG[chosenImageIndex];
+  drawRandomFoodImage() {
+    const foodId = "food_img";
 
-    const { x, y } = this._getRandomFoodImageCoords();
-
-    chosenImage.setAttribute("id", this.FOOD_ID);
-    chosenImage.classList.add(this.FOOD_ID);
-    chosenImage.style.cssText = `left: ${x}px; top: ${y}px;`;
-
-    this.DRAWN_FOOD_X = x;
-    this.DRAWN_FOOD_Y = y;
-
-    this.playField.appendChild(chosenImage);
-  }
-
-  regenerateFoodImage() {
-    const currentDrawnImageDom = document.getElementById(this.FOOD_ID);
+    // detect existing food image and remove it
+    const currentDrawnImageDom = document.getElementById(foodId);
 
     if (currentDrawnImageDom) {
       currentDrawnImageDom.remove();
@@ -324,11 +140,26 @@ class Playground {
       this.DRAWN_FOOD_Y = 0;
     }
 
+    // generate free clusters for food generation
     this._generateFreeClusters();
 
-    if (this.PLAYGROUND_FREE_CLUSTERS.length !== 0) {
-      this._drawRandomFoodImageAtCoords();
-    }
+    // generate new food image
+    const chosenImageIndex = Math.round(
+      Math.random() * (this.FOOD_IMG.length - 1)
+    );
+
+    const chosenImage = this.FOOD_IMG[chosenImageIndex];
+
+    const { x, y } = this._getRandomFoodImageCoords();
+
+    chosenImage.setAttribute("id", foodId);
+    chosenImage.classList.add(foodId);
+    chosenImage.style.cssText = `left: ${x}px; top: ${y}px;`;
+
+    this.DRAWN_FOOD_X = x;
+    this.DRAWN_FOOD_Y = y;
+
+    this.PLAYGROUND_DOM.appendChild(chosenImage);
   }
 
   snakeCollidesWithFood({ currentSnakeX, currentSnakeY }) {
@@ -337,7 +168,7 @@ class Playground {
       currentSnakeY === this.DRAWN_FOOD_Y
     ) {
       this._generateFreeClusters();
-      this.regenerateFoodImage();
+      this.drawRandomFoodImage();
 
       return true;
     }
@@ -384,23 +215,24 @@ class Playground {
     return false;
   }
 
-  _renderScore(score) {
-    const scoreDom = document.querySelector("h2 > span");
-    scoreDom.innerHTML = score;
+  _renderScore(currentScore) {
+    this.SCORE_DOM.innerHTML = currentScore;
   }
 
-  _renderScoreGameOver(score) {
-    document.querySelector(".game-container__last-score > span").innerHTML =
-      score;
-
-    // document.querySelector('.game-container__last-score--win > span'
-    // ).innerHTML = score;
+  _renderScoreGameOver(currentScore) {
+    this.SCORE_GAME_OVER_DOM.innerHTML = currentScore;
   }
 
-  renderHighScore(score) {
-    this.HIGH_SCORE = Math.max(score, this.HIGH_SCORE);
-    localStorage.setItem(this.LOCAL_STORAGE_NAME_SCORE, this.HIGH_SCORE);
-    // document.querySelector("#high-score > span").innerHTML = this.HIGH_SCORE;
+  renderHighScore(currentScore) {
+    const localStorageNameScore = "TTTTNAKEbestScore";
+
+    const highScore =
+      localStorage.getItem(localStorageNameScore) === null
+        ? 0
+        : localStorage.getItem(localStorageNameScore);
+
+    currentScore > highScore && localStorage.setItem(localStorageNameScore, highScore)
+    // if currentScore > highScore - execute next code
   }
 
   renderCompletion(newGame) {
@@ -412,14 +244,12 @@ class Playground {
             100 *
             10
         ) / 10;
-    } else  this.COMPLETION = 0;
+    } else this.COMPLETION = 0;
 
-    //  localStorage.setItem(this.LOCAL_STORAGE_NAME_COMPLETION, this.COMPLETION);
-
-    document.querySelector("#completion > span").innerHTML = this.COMPLETION;
+    this.COMPLETION_DOM.innerHTML = this.COMPLETION;
   }
 
-  editScore(gameOver, reset, win) {
+  editScore({gameOver, reset, win}) {
     if (!gameOver && !reset && !win) {
       this.SCORE += this.SCORE_STEP;
       this._renderScore(this.SCORE);
@@ -434,10 +264,8 @@ class Playground {
       this._renderScore(this.SCORE);
       this.renderCompletion(true);
     } else if (!gameOver && !reset && win) {
-      this._renderScoreGameOver(this.SCORE);
       this._renderScore(this.SCORE);
       this._renderScoreGameOver(this.SCORE);
     }
-    return;
   }
 }
